@@ -1,0 +1,26 @@
+<h1>Employee Details</h1>
+<p>Name: <%= @employee.name %></p>
+<p>Department: <%= @employee.department.name %> (<%= @employee.department.floor %>)</p>
+
+<h2>Tickets</h2>
+<ul>
+  <% @employee.tickets.each do |ticket| %>
+    <li><%= ticket.subject %> (Age: <%= ticket.age %>)</li>
+  <% end %>
+</ul>
+
+<div class="oldest-ticket">
+<h2>Oldest Ticket Assigned</h2>
+<% if @employee.oldest_ticket %>
+  <p><%= @employee.oldest_ticket.subject %></p>
+<% else %>
+  <p>No tickets assigned to this employee.</p>
+<% end %>
+</div>
+
+<h1>Add a ticket to employee</h1>
+  <%= form_with url: "/employee/#{@employee.id}/tickets", method: :post, data: {turbo: false} do |f| %>
+  <%= f.label :ticket_id, "Ticket ID" %>
+  <%= f.number_field :ticket_id %>
+  <%= f.submit "Add Ticket" %>
+<% end %> 
